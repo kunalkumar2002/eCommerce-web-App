@@ -1,0 +1,25 @@
+.home {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex: 4;
+  margin: 0 auto; /* Add this line to center horizontally */
+}
+.home .allList {
+  height: 400px;
+  margin: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.home .allList .inner p {
+  font-size: larger;
+  padding-top: -5px;
+}
+
+.home .allList img {
+  width: 250px;
+  height: 150px;
+}
