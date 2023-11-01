@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home, Products, AddProduct } from "../pages";
 import { useState, useEffect } from "react";
 import { API_ROOT } from "../utils/api";
+import axios, { all } from "axios";
 
 import Nevbar from "./nevbar";
 import Loder from "./loder";
@@ -11,18 +12,19 @@ function App() {
   const [item, setItem] = useState([]);
   const [loding, setLoading] = useState(true);
 
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get(API_ROOT);
+      //console.log(data.products);
+      setItem(data.products);
+      setLoading(false);
+    } catch (error) {
+      console.log(`error in getting products `, error);
+    }
+  };
+
   useEffect(() => {
-    fetch(API_ROOT) // Replace with your API endpoint
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.products);
-        setItem(data.products);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
+    fetchProducts();
   }, []);
 
   if (loding) {
