@@ -1,1 +1,1 @@
-const API_ROOt = "https://my-json-server.typicode.com/";
+export const API_ROOT = "https://dummyjson.com/products?limit=100";

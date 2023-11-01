@@ -13,7 +13,7 @@ function Nevbar() {
         <Link to="/addProduct">AddProduct</Link>
       </nav>
       <div className="image">
-        <img src={myImage} />
+        <img src={myImage} alt="user-img" />
         {/* <img src={secImage} /> */}
         <span>0</span>
       </div>
