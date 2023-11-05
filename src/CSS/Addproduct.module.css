@@ -1,0 +1,58 @@
+body {
+  background-color: black;
+}
+
+.container {
+  margin: 0 auto;
+  width: 60%;
+  border: 2px solid rgb(255, 119, 7);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 30px;
+  background-color: gray;
+}
+
+.holder {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px;
+}
+
+.holder label {
+  text-align: left;
+  color: white;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.holder input {
+  height: 50px;
+  width: 100%;
+  border: 2px solid black;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.holder textarea {
+  height: 50px;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.holder .addProduct {
+  background-color: green;
+  width: 20%;
+  color: white;
+  margin-top: 30px;
+
+  margin-left: 50px;
+  font-weight: bold;
+  font-size: x-large;
+  border-radius: 4px;
+}

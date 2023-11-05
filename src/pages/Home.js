@@ -51,7 +51,7 @@ function Home(props) {
                   <Ratings rating={index.rating} />
                 </div>
                 <div className={styles.discripttion}>{index.description} </div>
-                <button>Add to Cart</button>
+                <button className={styles.addTocart}>Add to Cart</button>
               </div>
             </div>
           ))
