@@ -27,15 +27,12 @@ function Home(props) {
   return (
     <div className={styles.container}>
       {!isSorting && (
-        <button className="btn btn-danger mx-2" onClick={handleSort}>
+        <button className={styles.sort} onClick={handleSort}>
           Sort by Price
         </button>
       )}
       {isSorting && (
-        <button
-          className="btn btn-dark d-flex align-items-center mx-2"
-          onClick={handleClose}
-        >
+        <button className={styles.sort} onClick={handleClose}>
           <span>Close</span>
         </button>
       )}
