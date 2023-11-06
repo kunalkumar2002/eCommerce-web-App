@@ -1,10 +1,14 @@
 import styles from "../CSS/home.module.css";
 import Ratings from "../components/rating";
 import { useState } from "react";
+import sideImg from "../image/more.png";
+import Sidebar from "./sidebar";
 
 function Home(props) {
   const { item, setItem } = props;
   const [isSorting, setSorting] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openItemId, setOpenItemId] = useState(null);
   // console.log(typeof item);
 
   const handleSort = (e) => {
@@ -17,11 +21,21 @@ function Home(props) {
     console.log("Sorted:", sortedItems);
   };
 
-  const handleClose = () => {
+  const handleUnsort = () => {
     setSorting(!isSorting);
     const sortedItems = [...item];
     sortedItems?.sort((a, b) => a.id - b.id);
     setItem(sortedItems);
+  };
+
+  const handleOpen = (itemId) => {
+    setOpen(!open);
+    setOpenItemId(itemId);
+  };
+
+  const handleDeleteItom = (itemToDelete) => {
+    const updatedItems = item.filter((i) => i.id !== itemToDelete.id);
+    setItem(updatedItems);
   };
 
   return (
@@ -32,7 +46,7 @@ function Home(props) {
         </button>
       )}
       {isSorting && (
-        <button className={styles.sort} onClick={handleClose}>
+        <button className={styles.sort} onClick={handleUnsort}>
           <span>Close</span>
         </button>
       )}
@@ -41,7 +55,19 @@ function Home(props) {
           item.map((index) => (
             <div className={styles.allList} key={index.id}>
               <div className={styles.inner}>
-                <p>{index.title}</p>
+                <div className={styles.uper}>
+                  <p>{index.title}</p>
+                  {open && openItemId === index.id && (
+                    <Sidebar element={index} onDelete={handleDeleteItom} />
+                  )}
+
+                  <img
+                    onClick={() => handleOpen(index.id)}
+                    src={sideImg}
+                    alt="sidebar"
+                  />
+                </div>
+
                 <img src={index.images[0]} alt={item.brand} />
                 <p>Rs {index.price} </p>
                 <div>

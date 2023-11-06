@@ -1,0 +1,14 @@
+.container {
+  background-color: rgb(126, 3, 3);
+  border: 3px solid orange;
+  cursor: pointer;
+  padding: 6px;
+  color: white;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.container .in:hover {
+  border-bottom: 1px solid white;
+  font-weight: bold;
+}

@@ -58,3 +58,16 @@
 .discripttion {
   color: gray;
 }
+
+.home .allList .uper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.home .allList .uper img {
+  height: 30px;
+  width: 30px;
+  margin-top: 10px;
+  cursor: pointer;
+  position: relative;
+}
