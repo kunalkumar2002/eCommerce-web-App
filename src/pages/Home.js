@@ -1,89 +1,44 @@
-import styles from "../CSS/home.module.css";
-import Ratings from "../components/rating";
-import { useState } from "react";
-import sideImg from "../image/more.png";
-import Sidebar from "./sidebar";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getProductsFromDB,
+  productSelector,
+} from "../redux/reducers/productsReducer";
+import { Products } from "../components/ProductComp.js";
+import { authSelector } from "../redux/reducers/authReducer.js";
 
-function Home(props) {
-  const { item, setItem } = props;
-  const [isSorting, setSorting] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openItemId, setOpenItemId] = useState(null);
-  // console.log(typeof item);
-
-  const handleSort = (e) => {
-    e.preventDefault();
-    //console.log("sort");
-    setSorting(!isSorting);
-    const sortedItems = [...item]; // Create a copy of the original array
-    sortedItems.sort((a, b) => a.price - b.price);
-    setItem(sortedItems);
-    console.log("Sorted:", sortedItems);
-  };
-
-  const handleUnsort = () => {
-    setSorting(!isSorting);
-    const sortedItems = [...item];
-    sortedItems?.sort((a, b) => a.id - b.id);
-    setItem(sortedItems);
-  };
-
-  const handleOpen = (itemId) => {
-    setOpen(!open);
-    setOpenItemId(itemId);
-  };
-
-  const handleDeleteItom = (itemToDelete) => {
-    const updatedItems = item.filter((i) => i.id !== itemToDelete.id);
-    setItem(updatedItems);
-  };
-
-  return (
-    <div className={styles.container}>
-      {!isSorting && (
-        <button className={styles.sort} onClick={handleSort}>
-          Sort by Price
-        </button>
-      )}
-      {isSorting && (
-        <button className={styles.sort} onClick={handleUnsort}>
-          <span>Close</span>
-        </button>
-      )}
-      <div className={styles.home}>
-        {Array.isArray(item) ? (
-          item.map((index) => (
-            <div className={styles.allList} key={index.id}>
-              <div className={styles.inner}>
-                <div className={styles.uper}>
-                  <p>{index.title}</p>
-                  {open && openItemId === index.id && (
-                    <Sidebar element={index} onDelete={handleDeleteItom} />
-                  )}
-
-                  <img
-                    onClick={() => handleOpen(index.id)}
-                    src={sideImg}
-                    alt="sidebar"
-                  />
-                </div>
-
-                <img src={index.images[0]} alt={item.brand} />
-                <p>Rs {index.price} </p>
-                <div>
-                  <Ratings rating={index.rating} />
-                </div>
-                <div className={styles.discripttion}>{index.description} </div>
-                <button className={styles.addTocart}>Add to Cart</button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>item is not an array</p>
-        )}
+export const Home = () => {
+  const dispatch = useDispatch();
+  const { products, isLoading } = useSelector(productSelector);
+  const { isLoggedIn } = useSelector(authSelector);
+  useEffect(() => {
+    dispatch(getProductsFromDB());
+  }, [dispatch]);
+  return isLoading ? (
+    <h2>Loading Products... </h2>
+  ) : (
+    <div className="homePage" style={styles.homePage}>
+      {!isLoggedIn ? <h3>Login to Add products into your cart</h3> : <></>}
+      <div style={styles.homePageProductPart}>
+        {products.map((currProd, index) => {
+          return <Products currProd={currProd} key={index} />;
+        })}
       </div>
     </div>
   );
-}
+};
+const styles = {
+  homePage: {
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
+  homePageProductPart: {
+    display: "flex",
 
-export default Home;
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+};

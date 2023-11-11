@@ -1,52 +1,50 @@
-import "../CSS/App.css";
-import { Routes, Route } from "react-router-dom";
-import { Home, Products, AddProduct } from "../pages";
-import { useState, useEffect } from "react";
-import { API_ROOT } from "../utils/api";
-import axios from "axios";
+import "../App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Login } from "../pages/Login";
+import { SignUp } from "../pages/SignUp";
+import { Navbar } from "./Navbar";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
+// import { alertSelector } from "../redux/reducers/alertReducer";
+import { useEffect } from "react";
 
-import Nevbar from "./nevbar";
-import Loder from "./loder";
+// import { doc, setDoc } from "firebase/firestore";
+// import { db } from "../firebase";
+import { Home } from "../pages/Home";
+import { CartPage } from "../pages/CartPage";
+import { AlertComp } from "./AlertComp";
+import { ProductDetails } from "../pages/ProductDetails";
 
-function App() {
-  const [item, setItem] = useState([]);
-  const [loding, setLoading] = useState(true);
-
-  const fetchProducts = async () => {
-    try {
-      const { data } = await axios.get(API_ROOT);
-      //console.log(data.products);
-
-      setItem(data.products);
-      setLoading(false);
-    } catch (error) {
-      console.log(`error in getting products `, error);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  if (loding) {
-    return <Loder />;
-  }
+export default function App() {
+  // const { message } = store.getState().alertReducer;
+  useEffect(() => {}, []);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Navbar />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "/login", element: <Login /> },
+        { path: "/signup", element: <SignUp /> },
+        { path: "/cart-page", element: <CartPage /> },
+        { path: "/product-page/:id", element: <ProductDetails /> },
+        // {
+        //   path: "/",
+        //   children: [
+        //     { index: true, element: "" },
+        //     { path: ":", element: "" },
+        //   ],
+        // },
+      ],
+    },
+  ]);
 
   return (
     <div className="App">
-      <Nevbar />
-
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={<Home item={item} setItem={setItem} />}
-        />
-        <Route exact path="/product" Component={Products} />
-        <Route exact path="/addProduct" Component={AddProduct} />
-      </Routes>
+      <Provider store={store}>
+        <AlertComp />
+        <RouterProvider router={router} />
+      </Provider>
     </div>
   );
 }
-
-export default App;
