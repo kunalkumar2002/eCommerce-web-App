@@ -68,7 +68,8 @@ export const ProductDetails = () => {
           data-tooltip-id="addcart-tooltip"
           data-tooltip-content="Login to adds this product in cart"
           onClick={() => console.log("click")}
-          disabled={!isLoggedIn}>
+          disabled={!isLoggedIn}
+        >
           Add to Cart
         </button>
       ) : (

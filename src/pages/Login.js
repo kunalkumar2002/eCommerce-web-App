@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { authSelector, userLogin } from "../redux/reducers/authReducer";
 import { Tooltip } from "react-tooltip";
 export const Login = () => {
   const dispatch = useDispatch();
   const { displayName, isLoggedIn } = useSelector(authSelector);
+  const navigate = useNavigate();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -15,9 +17,10 @@ export const Login = () => {
     const userPasswordInput = passwordRef.current.value;
     console.log(userEmailInput, userPasswordInput);
     dispatch(userLogin({ userEmailInput, userPasswordInput }));
+    navigate(`/`);
   };
   return (
-    <div className="loignPage">
+    <div className="loignPage" style={styles.container}>
       <form onSubmit={handleLoginSubmit} style={styles.formStyle}>
         <label>Enter Your Email</label>
         <input ref={emailRef} type="email" required />
@@ -30,7 +33,8 @@ export const Login = () => {
           <button
             data-tooltip-id="login-tooltip"
             data-tooltip-content="you are already loggedIn"
-            disabled={isLoggedIn}>
+            disabled={isLoggedIn}
+          >
             LogIn
           </button>
         )}
@@ -41,8 +45,16 @@ export const Login = () => {
 };
 
 const styles = {
+  container: {
+    width: "60%",
+    margin: "0 auto",
+  },
   formStyle: {
     display: "flex",
     flexDirection: "column",
+    width: "60%",
+    textAlign: "left",
+    margin: "10px",
+    padding: "10px",
   },
 };

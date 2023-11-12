@@ -18,12 +18,13 @@ export const getProductsFromDB = createAsyncThunk(
     thunkAPI.dispatch(setInitalProduct(data1));
   }
 );
+
 const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
     setInitalProduct: (state, action) => {
-      console.log(action);
+      // console.log(action);
       state.products = action.payload;
       state.isLoading = false;
     },

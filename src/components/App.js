@@ -14,6 +14,7 @@ import { Home } from "../pages/Home";
 import { CartPage } from "../pages/CartPage";
 import { AlertComp } from "./AlertComp";
 import { ProductDetails } from "../pages/ProductDetails";
+import { AddnewProduct } from "../pages/addNewproduct";
 
 export default function App() {
   // const { message } = store.getState().alertReducer;
@@ -21,13 +22,15 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navbar />,
+      element: <Navbar login="login" />,
       children: [
         { index: true, element: <Home /> },
         { path: "/login", element: <Login /> },
         { path: "/signup", element: <SignUp /> },
         { path: "/cart-page", element: <CartPage /> },
         { path: "/product-page/:id", element: <ProductDetails /> },
+        { path: "/add-product", element: <AddnewProduct /> },
+
         // {
         //   path: "/",
         //   children: [

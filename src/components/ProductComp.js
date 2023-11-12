@@ -51,12 +51,14 @@ export const Products = (props) => {
       {/* conditional rendering to ensure that tooltip only appears when button is
     disabled */}
       <Tooltip id="addcart-tooltip" />
+      <button>delete</button>
       {!isLoggedIn ? (
         <button
           data-tooltip-id="addcart-tooltip"
           data-tooltip-content="Login to adds this product in cart"
           onClick={() => console.log("click")}
-          disabled={!isLoggedIn}>
+          disabled={!isLoggedIn}
+        >
           Add to Cart
         </button>
       ) : (
@@ -74,9 +76,11 @@ const styles = {
     height: "100%",
     width: "19%",
     margin: 10,
-    padding: 10,
-    flexWrap: "nowrap",
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexWrap: "wrap",
     alignItems: "center",
+    border: "2px solid gray",
   },
   productDescpStyle: {
     textWrap: "balance",

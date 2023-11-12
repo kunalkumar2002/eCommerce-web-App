@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { websitelogo, shoppingcartLogo } from "../assets/exportAssets";
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/reducers/userReducer";
-export const Navbar = () => {
+export const Navbar = (props) => {
   const { userCartData } = useSelector(userSelector);
   return (
     <div>
@@ -14,15 +14,17 @@ export const Navbar = () => {
           </div>
 
           <NavLink
-            style={({ isActive }) =>
-              isActive
+            style={({ isActive }) => ({
+              display: props.login === "" ? "none" : "block",
+              ...(isActive
                 ? {
                     border: "2px solid #fff",
                     backgroundColor: "#e1d1f976",
                   }
-                : null
-            }
-            to="/">
+                : null),
+            })}
+            to="/"
+          >
             Home
           </NavLink>
 
@@ -35,8 +37,9 @@ export const Navbar = () => {
                   }
                 : null
             }
-            to="/login">
-            Login
+            to="/login"
+          >
+            {props.login}
           </NavLink>
 
           <NavLink
@@ -48,8 +51,22 @@ export const Navbar = () => {
                   }
                 : null
             }
-            to="/signup">
+            to="/signup"
+          >
             Signup
+          </NavLink>
+          <NavLink
+            style={({ isActive }) =>
+              isActive
+                ? {
+                    border: "2px solid #fff",
+                    backgroundColor: "#e1d1f976",
+                  }
+                : null
+            }
+            to="/add-product"
+          >
+            AddPrduct
           </NavLink>
         </nav>
         <Link to="/cart-page">

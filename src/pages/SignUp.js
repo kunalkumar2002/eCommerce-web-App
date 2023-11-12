@@ -23,7 +23,7 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="signUpPage">
+    <div className="signUpPage" style={styles.container}>
       <form onSubmit={handleSignUp} style={styles.formStyle}>
         <label>Enter your name</label>
         <input
@@ -53,8 +53,16 @@ export const SignUp = () => {
 };
 
 const styles = {
+  container: {
+    width: "60%",
+    margin: "0 auto",
+  },
   formStyle: {
     display: "flex",
     flexDirection: "column",
+    width: "60%",
+    textAlign: "left",
+    margin: "10px",
+    padding: "10px",
   },
 };
