@@ -3,6 +3,10 @@ import { authSelector } from "../redux/reducers/authReducer";
 import { Tooltip } from "react-tooltip";
 import { addProductsInCart, userSelector } from "../redux/reducers/userReducer";
 import { Link } from "react-router-dom";
+import {
+  removeProductFromDB,
+  removeProduct,
+} from "../redux/reducers/productsReducer";
 // import { setAlert } from "../redux/reducers/alertReducer";
 export const Products = (props) => {
   const { userEmail, isLoggedIn } = useSelector(authSelector);
@@ -19,6 +23,16 @@ export const Products = (props) => {
     );
     // dispatch(setAlert("This Product is already in the cart"));
     // setTimeout(() => dispatch(setAlert(null)), 3000);
+  };
+
+  const handleRemove = (productId) => {
+    try {
+      dispatch(removeProductFromDB(productId)).then(() => {
+        dispatch(removeProduct(productId));
+      });
+    } catch (error) {
+      console.error("Error dispatching removeProductFromDB:", error);
+    }
   };
 
   const {
@@ -51,7 +65,7 @@ export const Products = (props) => {
       {/* conditional rendering to ensure that tooltip only appears when button is
     disabled */}
       <Tooltip id="addcart-tooltip" />
-      <button>delete</button>
+      <button onClick={() => handleRemove(props.currProd.id)}>delete</button>
       {!isLoggedIn ? (
         <button
           data-tooltip-id="addcart-tooltip"
