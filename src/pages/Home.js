@@ -6,35 +6,33 @@ import {
 } from "../redux/reducers/productsReducer";
 import { Products } from "../components/ProductComp.js";
 import { authSelector } from "../redux/reducers/authReducer.js";
+// ... (your imports and other code)
 
 export const Home = () => {
   const dispatch = useDispatch();
-  let { products, isLoading } = useSelector(productSelector);
+  const { products, isLoading } = useSelector(productSelector);
   const { isLoggedIn } = useSelector(authSelector);
   const [enable, setEnable] = useState(false);
   const [item, setItem] = useState([]);
-  useEffect(() => {
-    dispatch(getProductsFromDB());
-  }, [dispatch]);
+  const [originalProducts, setOriginalProducts] = useState([]);
 
-  // useEffect(() => {
-  //   dispatch();
-  // }, []);
+  useEffect(() => {
+    dispatch(getProductsFromDB()).then((data) => {
+      setOriginalProducts(data);
+    });
+  }, [dispatch]);
 
   const handleSort = (e) => {
     e.preventDefault();
-    // console.log(products);
     const sortedProducts = [...products];
     sortedProducts.sort((a, b) => a.price - b.price);
-    // products = [...sortedProducts];
-    products = sortedProducts;
-    setItem(products);
+    setItem(sortedProducts);
     setEnable(!enable);
-    //console.log(item);
-    console.log(products);
   };
+
   const handleUnsort = (e) => {
     e.preventDefault();
+    setItem(originalProducts);
     setEnable(!enable);
   };
 
@@ -44,7 +42,7 @@ export const Home = () => {
     <div>
       {!enable && (
         <button style={styles.sort} onClick={handleSort}>
-          sort By
+          Sort By
         </button>
       )}
       {enable && (
@@ -55,19 +53,15 @@ export const Home = () => {
       <div className="homePage" style={styles.homePage}>
         {!isLoggedIn ? <h3>Login to Add products into your cart</h3> : <></>}
         <div style={styles.homePageProductPart}>
-          {item.length !== 0 &&
-            item.map((currProd, index) => {
-              return <Products currProd={currProd} key={index} />;
-            })}
-          {item.length === 0 &&
-            products.map((currProd, index) => {
-              return <Products currProd={currProd} key={index} />;
-            })}
+          {(item.length > 0 ? item : products).map((currProd, index) => (
+            <Products currProd={currProd} key={index} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
 const styles = {
   sort: {
     marginLeft: 20,
